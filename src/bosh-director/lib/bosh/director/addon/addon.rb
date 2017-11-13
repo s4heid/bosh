@@ -76,7 +76,11 @@ module Bosh::Director
 
           addon_job_object = DeploymentPlan::Job.new(deployment_release_version, addon_job_hash['name'], deployment.name)
           addon_job_object.bind_models
-          deployment_jobs = fetch_deployment_jobs(deployment, addon_job_hash['name'])
+          #deployment_jobs = fetch_deployment_jobs(deployment, addon_job_hash['name'])
+
+          deployment_jobs = deployment_release_version.model.templates.select do |template|
+            template.name == addon_job_hash['name']
+          end
 
           deployment.instance_groups.map(&:name).each do |instance_group_name|
 

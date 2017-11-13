@@ -1628,6 +1628,29 @@ Error: Unable to process links for deployment. Errors are:
       it 'allows only the specified properties' do
         expect{ deploy_simple_manifest(manifest_hash: manifest) }.to_not raise_error
       end
+
+      context 'when you have addon jobs' do
+        let(:instance_group_consumes_link_spec_for_addon) do
+          spec = Bosh::Spec::NewDeployments.simple_instance_group(
+            name: 'deployment-job',
+            jobs: [{'name' => 'api_server', 'consumes' => links, 'release'=> 'simple-link-release'}]
+          )
+          spec
+        end
+        it 'should use same release version specified in manifest' do
+          bosh_runner.run("upload-release #{spec_asset('links_releases/simple_link_release_v1.0.tgz')}")
+          manifest = Bosh::Spec::NetworkingManifest.deployment_manifest
+          manifest['releases'].clear
+          manifest['releases'] << {
+            'name' => 'simple-link-release',
+            'version' => '1.0'
+          }
+          manifest['instance_groups'] = [ mysql_instance_group_spec, postgres_instance_group_spec]
+          manifest['addons'] = [instance_group_consumes_link_spec_for_addon ]
+          puts manifest.inspect
+          output_2, exit_code_2 = deploy_simple_manifest(manifest_hash: manifest, return_exit_code: true)
+        end
+      end
     end
 
     context 'when resurrector tries to resurrect an VM with jobs that consume links', hm: true do
