@@ -27,6 +27,16 @@ module Bosh::Director
           expect(Models::Config.first.content).to eq(content)
         end
 
+        it 'ignores cloud config when config already exists' do
+          content = YAML.dump(Bosh::Spec::Deployments.simple_cloud_config)
+          Models::Config.make(:cloud, content: content)
+
+          post '/', content, {'CONTENT_TYPE' => 'text/yaml'}
+
+          expect(Models::Config.count).to eq(1)
+          expect(last_response.status).to eq(200)
+        end
+
         it 'gives a nice error when request body is not a valid yml' do
           post '/', "}}}i'm not really yaml, hah!", {'CONTENT_TYPE' => 'text/yaml'}
 
