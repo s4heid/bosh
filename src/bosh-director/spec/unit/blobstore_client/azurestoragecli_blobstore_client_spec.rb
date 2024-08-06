@@ -37,7 +37,8 @@ module Bosh::Blobstore
         {
           'container_name' => 'test',
           'account_name' => 'NAME',
-          'account_key' => 'SECRET'
+          'account_key' => 'SECRET',
+          'environment' => 'AzureCloud'
         }
       end
       let(:stored_config_file) { File.new(expected_config_file).readlines }
