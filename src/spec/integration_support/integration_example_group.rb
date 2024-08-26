@@ -514,6 +514,7 @@ module IntegrationSupport
         end
 
         `git init;
+       git config --global --add safe.directory '*';
        git config user.name "John Doe";
        git config user.email "john.doe@example.org";
        git add .;

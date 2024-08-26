@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/ubuntu
+{
+	"build": {
+		"dockerfile": "../ci/dockerfiles/integration/Dockerfile",
+		"options": ["--network=host"],
+		"args": {
+			"BOSH_CLI_URL": "https://github.com/cloudfoundry/bosh-cli/releases/download/v7.8.1/bosh-cli-7.8.1-linux-amd64",
+			"META4_CLI_URL": "https://github.com/dpb587/metalink/releases/download/v0.5.0/meta4-0.5.0-linux-amd64",
+			"GOLANGCI_LINT_INSTALL_URL":"https://github.com/golangci/golangci-lint/releases/download/v1.61.0/golangci-lint-1.61.0-linux-amd64.tar.gz",
+			"YQ_CLI_URL": "https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64",
+			"RUBY_INSTALL_URL": "https://github.com/postmodern/ruby-install/releases/download/v0.9.3/ruby-install-0.9.3.tar.gz",
+			"RUBY_VERSION": "3.3.5",
+			"UAA_RELEASE_URL": "https://s3.amazonaws.com/bosh-compiled-release-tarballs/uaa-77.15.0-ubuntu-jammy-1.531.tgz",
+			"GEM_HOME": "/usr/local/bundle",
+			"JAVA_INSTALL_PREFIX": "/usr/lib/jvm",
+			"POSTGRES_MAJOR_VERSION": "13"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"rebornix.ruby",
+				"wingrunr21.vscode-ruby",
+				"mutantdino.resourcemonitor"
+			]
+		}
+	},
+	"postAttachCommand": [".devcontainer/install.sh"],
+	"remoteEnv": {
+		"DB": "mysql",
+		"DB_HOST": "127.0.0.1",
+		"DB_USER": "root",
+		"DB_PASSWORD": "password",
+		"DB_PORT": "3306"
+	}
+}
