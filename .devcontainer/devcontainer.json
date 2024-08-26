@@ -1,0 +1,28 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/ubuntu
+{
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"rebornix.ruby",
+				"wingrunr21.vscode-ruby"
+			]
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1": {
+			"version": "latest"
+		}
+    },
+	"postAttachCommand": [".devcontainer/install.sh"],
+	// "remoteUser": "vscode",
+	// "remoteEnv": {
+	// 	"DB": "mysql",
+	// 	"DB_USER": "root",
+	// 	"DB_PASSWORD": "password",
+	// 	"DB_PORT": "3306"
+	// }
+}
